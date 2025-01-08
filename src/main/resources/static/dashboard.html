@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hantering av schemaläggning</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+<div class="container">
+    <h1>LTU - Hantering av schemaläggning </h1>
+    <button id="fetchScheduleBtn">Skriv schemaunderlag</button>
+    <div id="scheduleContainer"></div>
+</div>
+
+<div id="lightbox" class="lightbox">
+    <div class="lightbox-content">
+        <span class="close">&times;</span>
+        <h1>Huvudinformation</h1>
+        <form id="scheduleForm">
+            <label for="kurskod">Kurskod</label>
+            <input type="text" id="kurskod" name="kurskod" placeholder="Skriv...">
+            <label for="kursnamn">Kursnamn</label>
+            <input type="text" id="kursnamn" name="kursnamn" placeholder="Skriv...">
+            <label for="kursansvarig">Kursansvarig</label>
+            <input type="text" id="kursansvarig" name="kursansvarig" placeholder="Skriv...">
+            <label for="antal_studenter">Antal studenter</label>
+            <input type="number" id="antal_studenter" name="antal_studenter" placeholder="Skriv..." min="0">
+            <label for="lektioner">(Antal?) lektioner</label>
+            <input type="number" id="lektioner" name="lektioner" placeholder="Skriv..." min="0">
+            <label for="paralella_kurser">Går kursen paralellt med en annan kurs?</label>
+            <input type="text" id="paralella_kurser" name="paralella_kurser" placeholder="Skriv...">
+            <label for="undervisande_lärare">Undervisande lärare</label>
+            <input type="text" id="undervisande_lärare" name="undervisande_lärare" placeholder="Skriv...">
+            <h1>Extra information</h1>
+            <div class="checkbox-container">
+                <label for="labbsalar">Behövs labbsalar?</label>
+                <input type="checkbox" id="labbsalar" name="labbsalar">
+            </div>
+            <div class="checkbox-container">
+                <label for="distans">Går kursen även på distans?</label>
+                <input type="checkbox" id="distans" name="distans">
+            </div>
+            <div>
+                <label for="utrustning">Behövs någon extra utrustning?</label>
+                <input type="text" id="utrustning" name="utrustning" placeholder="Skriv...">
+            </div>
+            <button type="button" id="convertToJsonBtn">Convert to JSON</button>
+        </form>
+        <h1>JSON Data</h1>
+        <textarea id="jsonData" readonly></textarea>
+    </div>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
