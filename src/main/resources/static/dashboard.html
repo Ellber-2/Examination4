@@ -9,21 +9,18 @@
 <body>
 <div class="container">
     <h1>LTU - Hantering av schemaläggning </h1>
-    <button id="fetchScheduleBtn">Skriv schemaunderlag</button>
+    <input type="text" id="timeeditLinkInput" placeholder="Enter TimeEdit link">
+    <button id="fetchScheduleBtn">Redigera och skicka till Canvas</button>
     <div id="scheduleContainer"></div>
 </div>
-
 <div id="lightbox" class="lightbox">
     <div class="lightbox-content">
         <span class="close">&times;</span>
-        <h1>Huvudinformation</h1>
-        <form id="scheduleForm">
-            <label for="TimeeditURL">Länk till schemaunderlag</label>
-            <input type="text" id="TimeeditURL" name="kurskod" placeholder="Skriv in URL till timeedit">
-            <button type="submit">Fetch Schedule</button>
+        <h1>Redigera och skicka till Canvas</h1>
+        <form id="jsonDataForm">
+            <div id="jsonData"></div>
+            <button type="button" id="saveBtn">Skicka till Canvas</button>
         </form>
-        <h1>JSON Data</h1>
-        <textarea id="jsonData" contenteditable=""></textarea>
     </div>
 </div>
 
