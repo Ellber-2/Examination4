@@ -1,5 +1,4 @@
 document.getElementById('fetchScheduleBtn').addEventListener('click', function() {
-    // Show the lightbox to input the URL
     const lightbox = document.getElementById('lightbox');
     const lightboxContent = document.querySelector('.lightbox-content');
     lightbox.style.display = 'block';
@@ -32,26 +31,41 @@ document.getElementById('scheduleForm').addEventListener('submit', function(even
         return;
     }
 
-    // Perform the fetch request to the backend API
     fetch('http://localhost:8080/api/fetch-schedule', {
-        method: 'POST',  // Use POST method
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ timeeditLink })  // Send the link as a JSON object
+        body: JSON.stringify({ timeeditLink })
     })
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            return response.json();  // Parse the JSON response
+            return response.json();
         })
         .then(data => {
-            console.log(data);  // Log response for debugging
+            // Extract and format the columns from each reservation, including starttime, startdate, endtime, and enddate
+            const formattedData = data.reservations.map(reservation => {
+                const columns = reservation.columns
+                    .map(column => column.trim())
+                    .filter(column => column !== '');
 
-            // Display the JSON response in the textarea
-            const jsonOutput = document.getElementById('jsonData');
-            jsonOutput.textContent = JSON.stringify(data, null, 2);  // Format JSON for readability
+                const additionalValues = [
+                    `Start Time: ${reservation.starttime}`,
+                    `Start Date: ${reservation.startdate}`,
+                    `End Time: ${reservation.endtime}`,
+                    `End Date: ${reservation.enddate}`
+                ];
+
+                return [...columns, ...additionalValues].join('\n');
+            }).filter(reservation => reservation !== '').join('\n\n');
+
+            // Insert the formatted data into the existing textarea
+            const jsonDataTextarea = document.getElementById('jsonData');
+            jsonDataTextarea.value = formattedData;
+
+
         })
         .catch(error => {
             console.error('Error:', error);

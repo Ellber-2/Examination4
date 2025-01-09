@@ -38,8 +38,10 @@ public class ApiService {
                 if (statusCode == 200) { // HTTP 200 OK
                     // Step 4: Parse the JSON response
                     String jsonResponse = EntityUtils.toString(response.getEntity());
-                    System.out.println("Fetched JSON from TimeEdit:");
+                    /*System.out.println("Fetched JSON from TimeEdit:");
                     System.out.println(jsonResponse);
+
+                     */
 
                     // Process the JSON data here (e.g., create calendar events)
                     ObjectMapper objectMapper = new ObjectMapper();
@@ -48,7 +50,7 @@ public class ApiService {
                     JsonNode eventsNode = rootNode.path("reservations");
                     if (eventsNode.isArray()) {
                         for (JsonNode event : eventsNode) {
-                            System.out.println("Event: " + event.toString());
+                            //System.out.println("Event: " + event.toString());
                         }
                     }
 
