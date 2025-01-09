@@ -48,6 +48,16 @@ input[type="text"] {
     border-radius: 10px;
 }
 
+#jsonData {
+    width: calc(100% - 22px);
+    height: 400px; /* Adjust the height to be 4 times larger */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    resize: none; /* Prevent resizing */
+}
+
 button {
     display: block;
     margin: 20px auto;
