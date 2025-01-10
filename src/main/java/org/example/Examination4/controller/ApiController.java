@@ -6,19 +6,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:63342")  // Allow requests from this origin
+@RequestMapping("/api")// Allow requests from this origin
 public class ApiController {
 
     @Autowired
     private ApiService apiService;
 
+    @PostMapping("/create-calendar-event")
+    public ResponseEntity<?> createCalendarEvent(@RequestBody String jsonPayload) {
+        return apiService.createCalendarEvent(jsonPayload);
+    }
     // The method to handle the POST request with the TimeEdit link
     @PostMapping("/fetch-schedule")
     public ResponseEntity<?> fetchSchedule(@RequestBody TimeEditRequest timeEditRequest) {
         // Pass the timeeditLink to the service
         return apiService.createTimeeditCalendarEvent(timeEditRequest.getTimeeditLink());
     }
+
 
     // DTO class to hold the timeeditLink
     public static class TimeEditRequest {

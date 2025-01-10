@@ -32,7 +32,7 @@ public class ApiRequest {
 
 			// Now use the access token in the API call to create an event
 			if (canvasApiUrl != null) {
-				createCalendarEvent();
+				createEvent();
 				//createTimeeditCalendarEvent("https://cloud.timeedit.net/ltu/web/schedule1/ri10985QX28Z04Q6ZW6gc565y90Z6Y58704gxY7Qb57aY050X39Q5757Y637Q8.html");
 			} else {
 				System.err.println("Canvas API URL is not set.");
@@ -90,7 +90,7 @@ public class ApiRequest {
 	}
 
 
-	private static void createCalendarEvent() {
+	private static void createEvent() {
 		try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
 			// Create a POST request for creating a calendar event
 			HttpPost request = new HttpPost(canvasApiUrl + "/calendar_events.json");

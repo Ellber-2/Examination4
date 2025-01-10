@@ -182,6 +182,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         console.log('Updated JSON Data:', jsonData);
-        // You can now send this updated JSON data to your backend if needed
+
+        // Send the updated JSON data to the backend
+        fetch('http://localhost:8080/api/create-calendar-event', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response from backend:', data);
+                alert('Calendar event created successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(`Error: ${error.message}`);
+            });
     });
 });
