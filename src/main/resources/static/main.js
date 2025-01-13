@@ -209,10 +209,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Get the user_id from the input box
-        const userId = document.getElementById('userIdInput').value;
-        jsonData.user_id = userId;
-
         console.log('Updated JSON Data:', jsonData);
 
         // Send the updated JSON data to the backend
