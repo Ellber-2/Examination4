@@ -95,7 +95,7 @@ public class ApiService {
     }
 
     private String buildEventFormData(JsonNode reservation) throws IOException {
-        String contextCode = "user_146018"; // Static or dynamically retrieved
+        String contextCode = "user_" + reservation.path("user_id").asText("");
         String title = reservation.path("columns").path("0").asText("Untitled Event");
         String location = reservation.path("columns").path("1").asText("");
         String startAt = reservation.path("startdate").asText("") + "T" + reservation.path("starttime").asText("");
