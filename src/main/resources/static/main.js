@@ -3,14 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
         '0': 'Aktivitet',
         '1': 'Lokal',
         '2': 'Lärare',
-        '3': 'Studentförening',
         '4': 'Kommentar',
         '5': 'Möteslänk',
         '6': 'Kurskod/Kursnamn',
-        '7': 'Grupp/Grupper',
         '8': 'Campus',
-        '9': 'Syfte',
-        '10': 'Utrustning',
         '11': 'Text',
     };
 
@@ -94,10 +90,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function createFormFields(container, data, parentKey = '') {
+        const columnsToExclude = ['3', '7', '9', '10'];
+
         for (const key in data) {
             if (data.hasOwnProperty(key)) {
-                if (key === 'columnheaders' || key === 'info') {
-                    continue;  // Skip the "columnheaders" and "info" keys
+                if (key === 'columnheaders' || key === 'info' || columnsToExclude.includes(key)) {
+                    continue;  // Skip the "columnheaders", "info", and excluded columns
                 }
                 const value = data[key];
                 const inputKey = parentKey ? `${parentKey}.${key}` : key;
@@ -148,17 +146,42 @@ document.addEventListener('DOMContentLoaded', function() {
                         displayKey = columnNamesMapping[key];
                     }
 
-                    const label = document.createElement('label');
-                    label.textContent = displayKey;
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.name = inputKey;
-                    input.value = value;
-                    if (parentKey && parentKey.includes('08:00')) {
-                        input.classList.add('exclude');
+                    if (key === 'id') {
+                        displayKey = 'ID';
+                    } else if (key === 'starttime') {
+                        displayKey = 'Starttid';
+                    } else if (key === 'endtime') {
+                        displayKey = 'Sluttid';
                     }
-                    container.appendChild(label);
-                    container.appendChild(input);
+
+                    // Combine "startdate" and "enddate" into "Datum"
+                    if (key === 'startdate' || key === 'enddate') {
+                        if (!container.querySelector(`[name="${parentKey}.Datum"]`)) {
+                            const label = document.createElement('label');
+                            label.textContent = 'Datum';
+                            const input = document.createElement('input');
+                            input.type = 'text';
+                            input.name = `${parentKey}.Datum`;
+                            input.value = value;
+                            container.appendChild(label);
+                            container.appendChild(input);
+                        }
+                    } else {
+                        const label = document.createElement('label');
+                        label.textContent = displayKey;
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.name = inputKey;
+                        input.value = value;
+                        if (key === 'id') {
+                            input.disabled = true;
+                        }
+                        if (parentKey && parentKey.includes('08:00')) {
+                            input.classList.add('exclude');
+                        }
+                        container.appendChild(label);
+                        container.appendChild(input);
+                    }
                 }
             }
         }
@@ -172,7 +195,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 const keys = key.split('.');
                 keys.reduce((acc, k, i) => {
                     if (i === keys.length - 1) {
-                        acc[k] = value;
+                        if (k === 'Datum') {
+                            acc['startdate'] = value;
+                            acc['enddate'] = value;
+                        } else {
+                            acc[k] = value;
+                        }
                     } else {
                         acc[k] = acc[k] || {};
                     }
